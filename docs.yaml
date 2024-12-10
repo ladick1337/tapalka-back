@@ -1,0 +1,361 @@
+openapi: 3.0.0
+info:
+  title: API Documentation
+  version: 1.0.0
+paths:
+  /auth/nonce:
+    get:
+      summary: Получение nonce для дальнейшей авторизации
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: |-
+                    {
+                       "nonce" : 1727261427
+                    }
+  /auth/verify:
+    summary: Авторизация
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                signature:
+                  type: string
+                  example: "signature"
+                address:
+                  type: string
+                  example: "0x......"
+                ref_code:
+                    type: string
+                    example: "ref_code"
+                nonce:
+                  type: integer
+                  example: 12345667789
+      summary: Авторизация
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: |-
+                    {
+                       "token" : "7077fd0a-2a67-4c57-8c3b-3010c246e28d",
+                    "expired_at": "2024-10-02T10:41:12.108Z"
+                    }
+  /profile/me:
+    get:
+      summary: Получение данных текущего пользователя
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: "{\n                  \t\"id\" : 1,\n                  \t\"wallet\" : \"0x6265617665726275696c642e6f7267\",\n                  \t\"balance\" : 1.2345,\n                  \t\"profit_passive\" : 1.2345,\n                  \t\"profit_game\" : 1.2345,\n                  \t\"count_prises\" : 0,\n                  \t\"count_cases\" : 0,\n                  \t\"created_at\" : \"2024-10-02T10:41:12.108Z\"\n                  }"
+  /profile/logout:
+    delete:
+      summary: Удалить текущий токен
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+  /profile/assets:
+    get:
+      summary: Получение инвентаря
+      description: ''
+      operationId: ''
+      parameters:
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+            example: 100
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: sortField
+          required: false
+          schema:
+            type: string
+            example: "id"
+        - in: query
+          name: sortMode
+          required: false
+          schema:
+            type: string
+            example: "desc"
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: |-
+                    {
+                    "items": [
+                        {
+                          "id": 5,
+                          "item": {
+                            "id": 5,
+                            "name": "item #4",
+                            "price": 500,
+                            "picture": null,
+                            "description": null,
+                            "created_at": "2024-09-25T09:39:20.000Z"
+                          },
+                          "quantity": 5,
+                          "user_id": 1,
+                          "created_at": "2024-09-25T09:39:20.000Z"
+                        },
+                        {
+                          "id": 4,
+                          "item": {
+                            "id": 4,
+                            "name": "item #3",
+                            "price": 400,
+                            "picture": null,
+                            "description": null,
+                            "created_at": "2024-09-25T09:39:20.000Z"
+                          },
+                          "quantity": 4,
+                          "user_id": 1,
+                          "created_at": "2024-09-25T09:39:20.000Z"
+                        }
+                      ],
+                      "count": 5,
+                      "pages": 1
+                    }
+  /assets/:id/sell:
+    delete:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 1
+      summary: Продать вещь из инвентаря
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+  /users/:id/:
+    get:
+      summary: Получение данных пользователя
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: "{\n                  \t\"id\" : 1,\n                  \t\"wallet\" : \"0x6265617665726275696c642e6f7267\",\n                  \t\"balance\" : 1.2345,\n                  \t\"profit_passive\" : 1.2345,\n                  \t\"profit_game\" : 1.2345,\n                  \t\"count_prises\" : 0,\n                  \t\"count_cases\" : 0,\n                  \t\"created_at\" : \"2024-10-02T10:41:12.108Z\"\n                  }"
+  /users/:id/assets:
+    get:
+      summary: Получение инвентаря пользователя
+      description: ''
+      operationId: ''
+      parameters:
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+            example: 100
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: sortField
+          required: false
+          schema:
+            type: string
+            example: "id"
+        - in: query
+          name: sortMode
+          required: false
+          schema:
+            type: string
+            example: "desc"
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: |-
+                    {
+                    "items": [
+                        {
+                          "id": 5,
+                          "item": {
+                            "id": 5,
+                            "name": "item #4",
+                            "price": 500,
+                            "picture": null,
+                            "description": null,
+                            "created_at": "2024-09-25T09:39:20.000Z"
+                          },
+                          "quantity": 5,
+                          "user_id": 1,
+                          "created_at": "2024-09-25T09:39:20.000Z"
+                        },
+                        {
+                          "id": 4,
+                          "item": {
+                            "id": 4,
+                            "name": "item #3",
+                            "price": 400,
+                            "picture": null,
+                            "description": null,
+                            "created_at": "2024-09-25T09:39:20.000Z"
+                          },
+                          "quantity": 4,
+                          "user_id": 1,
+                          "created_at": "2024-09-25T09:39:20.000Z"
+                        }
+                      ],
+                      "count": 5,
+                      "pages": 1
+                    }
+  /boxes:
+    get:
+      summary: Получение списка кейсов
+      description: ''
+      operationId: ''
+      parameters:
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+            example: 100
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: sortField
+          required: false
+          schema:
+            type: string
+            example: "id"
+        - in: query
+          name: sortMode
+          required: false
+          schema:
+            type: string
+            example: "desc"
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: |-
+                    {
+                      "items": [
+                        {
+                          "id": 1,
+                          "name": "Test lootbox",
+                          "picture": null,
+                          "prises": 2,
+                          "description": null,
+                          "price": 200.05,
+                          "created_at": "2024-09-25T09:39:20.000Z"
+                        }
+                      ],
+                      "count": 1,
+                      "pages": 1
+                    }
+  /boxes/:id:
+    get:
+      summary: Получение конкретного кейса
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: |-
+                    {
+                          "id": 1,
+                          "name": "Test lootbox",
+                          "picture": null,
+                          "prises": 2,
+                          "description": null,
+                          "price": 200.05,
+                          "created_at": "2024-09-25T09:39:20.000Z"
+                        }
+                        
+  /boxes/:id/items:
+    get:
+      summary: Получение содержимого кейса
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                default:
+                  value: |-
+                    [
+                       {
+                        "id": 2,
+                        "name": "item #1",
+                        "price": 200,
+                        "picture": null,
+                        "description": null,
+                        "created_at": "2024-09-25T09:39:20.000Z"
+                      },
+                      {
+                        "id": 2,
+                        "name": "item #1",
+                        "price": 200,
+                        "picture": null,
+                        "description": null,
+                        "created_at": "2024-09-25T09:39:20.000Z"
+                      }
+                    ]
